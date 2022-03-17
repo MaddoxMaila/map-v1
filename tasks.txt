@@ -1,0 +1,3 @@
+Web processing service - MapStore
+Cross layer filtering - Geoserver
+Point Buffer - WPS
