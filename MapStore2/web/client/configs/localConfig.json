@@ -101,7 +101,7 @@
                 "autoload": false
               },
               "wurth_data_wms": {
-                "url": "http://localhost:8080/geoserver/geo-int/wms",
+                "url": "http://104.248.255.27:8080/geoserver/wurth/wms",
                 "type":"wms",
                 "title": "Wurth GeoServer WMS",
                 "autoload": true

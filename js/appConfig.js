@@ -10,7 +10,7 @@ export default {
     {
         name: "map",
         path: "/home",
-        component: require('./MyApp').default
+        component: require('./Wurth').default
     },
     {
         name: 'mapstore-home',
@@ -20,7 +20,7 @@ export default {
     {
         name: "map",
         path: "/viewer/:mapType/:mapId",
-        component: require('./MyApp').default
+        component: require('./Wurth').default
     },
     {
         name: 'context',

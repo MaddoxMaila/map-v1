@@ -197,8 +197,8 @@ li.active > a > span {
     z-index: 100;
 }
 
-.app-image-start{
-
+.widget-title{
+    color: #c00;
 }
 
 .image-container-logo{
@@ -209,18 +209,19 @@ li.active > a > span {
     display: block;
 }
 
-.name-darker{
-
+.view-wrapper{
+    position: relative;
 }
 
 .wps-mode-wrapper{
     position: fixed;
-    top: 22.8%;
-    right: .34%;
+    top: 34.8vh;
+    right: .27%;
     height: 52px;
     width: 52px;
     padding-top: 20px;
     padding-left: 20px;
+    z-index: 1001 !important;
 }
 
 .fa-white{

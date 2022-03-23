@@ -27,7 +27,7 @@ import appURL from '@js/lib/resolveUrl'
 
 const urlQuery = url.parse(window.location.href, true).query;
 
-class MyApp extends React.Component {
+class Wurth extends React.Component {
 
     constructor(props){
         super(props)
@@ -136,12 +136,19 @@ class MyApp extends React.Component {
         }
 
          return (
-            <div>
+            <div className="view-wrapper">
                 <div className="move-image">
                     <img src={appImage()} className="image-logo" />
                 </div>
 
                 <div className="map-view-wrapper">
+
+                    <a className={`wps-mode-wrapper ${this.state.isWPSModeOn ? 'btn-success' : 'btn-primary'}`} onClick={() => {
+                            this.toggleWPSMode()
+                    }}>
+                        <i className="fa fa-map-pin fa-white"></i>
+                    </a>
+
                     <MapViewerCmp {...this.props} />
                 </div>
 
@@ -153,12 +160,7 @@ class MyApp extends React.Component {
                     <img src={appImage()} className="logo"/>
                 </div> */}
 
-                    <a className={`wps-mode-wrapper ${this.state.isWPSModeOn ? 'btn-success' : 'btn-primary'}`} onClick={() => {
-                        this.toggleWPSMode()
-                    }}>
-                        <i className="fa fa-map-pin fa-white"></i>
-                    </a>
-
+                    
             </div>
          );
      }
@@ -172,4 +174,4 @@ export default connect((state) => ({
     loadNewMap,
     loadMapConfig,
     onInit: initMap,
-})(MyApp);
+})(Wurth);

@@ -20,7 +20,7 @@ const WPSForm = (props) => {
                     <span style={{
                         fontWeight: "bolder",
                         fontSize: "24pt",
-                    }}>WPS Request</span>
+                    }}>Buffer Request</span>
                 </div>
                 <div className="media-right" style={{
                     paddingTop: "2.5%"

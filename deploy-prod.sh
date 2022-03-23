@@ -1,4 +1,4 @@
-LOCAL_HOME=/home/neo
+LOCAL_HOME=/home/tshepang
 SERVER_HOME=/home/mapstack
 WEBAPPS_DIR=/var/lib/tomcat9/webapps
 SERVER_SETUPS_DIR=$SERVER_HOME/geo-int/setups
