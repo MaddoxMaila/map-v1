@@ -15,7 +15,6 @@ import {CLICK_ON_MAP, initMap} from '@mapstore/actions/map';
 import url from 'url'
 
 import './styles/root-style.css';
-import NameLogo from './components/NameLogo';
 import { cdata, complexData, literalData, processData, processParameter, rawDataOutput, responseForm } from '@mapstore/observables/wps/common';
 
 
@@ -24,6 +23,9 @@ import WPSForm from './components/WPSForm'
 import eventBus from '@js/eventBus'
 import appImage from '@js/lib/resolveImg'
 import appURL from '@js/lib/resolveUrl'
+
+import BaseForm from '@js/components/BaseForm'
+import BufferInputForm from '@js/components/inputs/BufferInputForm'
 
 const urlQuery = url.parse(window.location.href, true).query;
 
@@ -131,8 +133,16 @@ class Wurth extends React.Component {
 
         let currentLocation = this.state.clickEvent?.latlng || {lat: 0, lng: 0}
 
-        const form = {
-            latlng: currentLocation
+        const bufferForm = {
+            header: 'Buffer Request',
+            mode: this.state.isWPSModeOn,
+            show: this.state.showForm,
+        }
+
+        const bufferInputs = {
+            latlng: currentLocation,
+            buttonText: 'Get Buffer',
+            onsubmit: this.onSubmit
         }
 
          return (
@@ -152,17 +162,17 @@ class Wurth extends React.Component {
                     <MapViewerCmp {...this.props} />
                 </div>
 
-                <WPSForm onClose={() => {
+                <BaseForm form={bufferForm} onclose={() => {
                     this.onFormClose()
-                }} isModeOn={this.state.isWPSModeOn} showForm={this.state.showForm} form={form} onSubmit={this.onSubmit}/>
+                }}>
+                    <BufferInputForm inputs={bufferInputs} />
+                </BaseForm>
 
-                {/* <div className="attribution align-middle">
-                    <img src={appImage()} className="logo"/>
-                </div> */}
-
-                    
+                {/* <WPSForm onClose={() => {
+                    this.onFormClose()
+                }} isModeOn={this.state.isWPSModeOn} showForm={this.state.showForm} form={form} onSubmit={this.onSubmit}/>     */}
             </div>
-         );
+         )
      }
 }
  
