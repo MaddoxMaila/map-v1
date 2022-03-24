@@ -3,7 +3,7 @@ SERVER_HOME=/home/mapstack
 WEBAPPS_DIR=/var/lib/tomcat9/webapps
 SERVER_SETUPS_DIR=$SERVER_HOME/geo-int/setups
 LOCAL_SETUP_DIR=$LOCAL_HOME/geo-int/setups
-WURTH_DEV_DIR=$LOCAL_HOME/geo-int/map-v1
+WURTH_DEV_DIR=$LOCAL_HOME/geo-int/mapstore/mapstore-v1
 
 
 
