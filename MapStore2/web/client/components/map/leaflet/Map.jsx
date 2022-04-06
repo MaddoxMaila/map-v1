@@ -27,7 +27,7 @@ import { throttle } from 'lodash';
 
 import './SingleClick';
 
-import eventBus from '@js/eventBus'
+import eventBus from '@js/lib/eventBus'
 
 class LeafletMap extends React.Component {
     static propTypes = {
@@ -160,7 +160,7 @@ class LeafletMap extends React.Component {
 
         this.map.on('singleclick', e => {
             window.clickEvent = {latlng: e.latlng}
-            eventBus.dispatch("clickEvent", e)
+            eventBus.dispatch("mapclick", e)
             
         })
 

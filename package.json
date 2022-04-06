@@ -116,7 +116,12 @@
         "webpack-dev-server": "3.11.0"
     },
     "dependencies": {
-        "mapstore2": "file:MapStore2"
+        "dotenv-webpack": "^7.1.0",
+        "mapstore2": "file:MapStore2",
+        "os-browserify": "^0.3.0",
+        "react-color": "^2.19.3",
+        "react-colorful": "^5.5.1",
+        "use-debouncy": "^4.2.1"
     },
     "scripts": {
         "postinstall": "node MapStore2/utility/build/postInstall.js",
@@ -132,6 +137,7 @@
         "build-war": "sh build.sh",
         "d-local": "sh deploy-local.sh",
         "d-prod": "sh deploy-prod.sh",
+        "bald": "npm run build-war && npm run d-local",
         "bad": "npm run build-war && npm run d-prod"
     },
     "author": "GeoSolutions",

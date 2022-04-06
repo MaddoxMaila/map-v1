@@ -9,23 +9,20 @@ import React from 'react';
 import {connect} from 'react-redux'
 import MapViewerCmp from '@mapstore/product/components/viewer/MapViewerCmp';
 import MapViewerContainer from '@mapstore/containers/MapViewer';
-import {executeProcess, executeProcessRequest, executeProcessXML} from '@mapstore/observables/wps/execute'
 import {loadMapConfig, loadNewMap} from '@mapstore/actions/config';
 import {CLICK_ON_MAP, initMap} from '@mapstore/actions/map';
 import url from 'url'
 
 import './styles/root-style.css';
-import { cdata, complexData, literalData, processData, processParameter, rawDataOutput, responseForm } from '@mapstore/observables/wps/common';
 
 
-import WPSForm from './components/WPSForm'
+// import WPSForm from './components/WPSForm'
 
-import eventBus from '@js/eventBus'
+import eventBus from '@js/lib/eventBus'
 import appImage from '@js/lib/resolveImg'
-import appURL from '@js/lib/resolveUrl'
-
+import {BufferWpsRequest, getDrivetimeWPS} from '@js/lib/wps/index'
 import BaseForm from '@js/components/BaseForm'
-import BufferInputForm from '@js/components/inputs/BufferInputForm'
+import {BufferInputForm, MapboxIsochroneInputForm} from '@js/components/inputs'
 
 const urlQuery = url.parse(window.location.href, true).query;
 
@@ -39,7 +36,6 @@ class Wurth extends React.Component {
             clickEvent: window?.clickEvent,
             showForm: false
         }
-
     }
 
     static defaultProps = {
@@ -67,82 +63,27 @@ class Wurth extends React.Component {
         if(this.props.state.mapInfo.enabled){
             this.props.state.mapInfo.enabled = false
         }
-
     }
 
-    onSubmit(fullForm){
+    render() {
 
-
-        const makeInput = (value, metadata) => {
-
-            let dataItem = metadata.type == 'complex' ? complexData(cdata(value), metadata?.mimeType) : literalData(value)
-            let pData = processData(dataItem)
-            let processedInput = processParameter(metadata.itemId, pData)
-    
-            return processedInput
-    
-        }
-
-        const buildRequestBody = (processType, metadata, inputs) => {
-    
-            let outputForm = rawDataOutput(metadata.resultsId, metadata.mimeType)
-            let resp = responseForm(outputForm)
-    
-            return executeProcessXML(processType, inputs, resp)
-        }
-
-        let inputs = [
-            makeInput(`POINT(${fullForm.lat} ${fullForm.lng})`, {
-                type: 'complex',
-                itemId: 'geom',
-                mimeType: 'text/xml; subtype=gml/3.1.1'
-            }),
-            makeInput(fullForm.distance, {
-                type: 'literal',
-                itemId: 'distance'
-            }),
-            makeInput(fullForm.segments, {
-                type: 'literal',
-                itemId: 'quadrantSegments'
-            })
-        ]
-
-        let buildRequestPayload = buildRequestBody('geo:buffer', {
-            resultsId: 'result',
-            mimeType: 'application/json',
-        }, inputs)
-
-        executeProcessRequest(`${appURL}/geoserver/wps`,  buildRequestPayload, {
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/xml'
-            }
-        }).subscribe(data => {
-            alert(JSON.stringify(data))
-        })
-
-    }
-
-     render() {
-
-        eventBus.on("clickEvent", data => {
+        eventBus.on("mapclick", data => {
             this.setState({clickEvent : data, showForm: this.state.isWPSModeOn})
         })
 
-        eventBus.remove("clickEvent", () => {})
+        eventBus.remove("mapclick", () => {})
 
         let currentLocation = this.state.clickEvent?.latlng || {lat: 0, lng: 0}
 
         const bufferForm = {
-            header: 'Buffer Request',
+            header: 'Create Drivetimes',
             mode: this.state.isWPSModeOn,
             show: this.state.showForm,
-        }
-
-        const bufferInputs = {
-            latlng: currentLocation,
-            buttonText: 'Get Buffer',
-            onsubmit: this.onSubmit
+            inputs: {
+                latlng: currentLocation,
+                buttonText: 'Get Drivetime',
+                onsubmit: getDrivetimeWPS,
+            }
         }
 
          return (
@@ -152,7 +93,6 @@ class Wurth extends React.Component {
                 </div>
 
                 <div className="map-view-wrapper">
-
                     <a className={`wps-mode-wrapper ${this.state.isWPSModeOn ? 'btn-success' : 'btn-primary'}`} onClick={() => {
                             this.toggleWPSMode()
                     }}>
@@ -162,15 +102,9 @@ class Wurth extends React.Component {
                     <MapViewerCmp {...this.props} />
                 </div>
 
-                <BaseForm form={bufferForm} onclose={() => {
-                    this.onFormClose()
-                }}>
-                    <BufferInputForm inputs={bufferInputs} />
+                <BaseForm form={bufferForm} onclose={() => {this.onFormClose()}}>
+                    <MapboxIsochroneInputForm inputs={bufferForm.inputs} />
                 </BaseForm>
-
-                {/* <WPSForm onClose={() => {
-                    this.onFormClose()
-                }} isModeOn={this.state.isWPSModeOn} showForm={this.state.showForm} form={form} onSubmit={this.onSubmit}/>     */}
             </div>
          )
      }

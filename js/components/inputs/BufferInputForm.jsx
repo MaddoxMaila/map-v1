@@ -44,7 +44,6 @@ const BufferInputForm = ({inputs}) => {
 
                 }} className='btn btn-primary req-btn'>{inputs.buttonText}</button>
             </center>
-
         </div>
     )
 

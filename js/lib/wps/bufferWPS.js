@@ -1,6 +1,6 @@
 import {executeProcess, executeProcessRequest, executeProcessXML} from '@mapstore/observables/wps/execute'
 import { cdata, complexData, literalData, processData, processParameter, rawDataOutput, responseForm } from '@mapstore/observables/wps/common';
-import appURL from '@js/lib/resolveUrl';
+import {appURL} from '@js/lib/resolveUrl';
 
 const makeInput = (value, metadata) => {
 

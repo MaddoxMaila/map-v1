@@ -35,7 +35,7 @@ import 'ol/ol.css';
 // add overrides for css
 import './mapstore-ol-overrides.css';
 
-import eventBus from '@js/eventBus';
+import eventBus from '@js/lib/eventBus';
 
 class OpenlayersMap extends React.Component {
     static propTypes = {
@@ -249,7 +249,7 @@ class OpenlayersMap extends React.Component {
                         }
                     }, layerInfo);
 
-                    eventBus.dispatch("clickEvent", {
+                    eventBus.dispatch("mapclick", {
                         latlng: {
                             lat: coords.y,
                             lng: tLng,

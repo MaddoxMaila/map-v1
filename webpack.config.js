@@ -1,4 +1,6 @@
 const path = require("path");
+const DotEnv = require('dotenv-webpack')
+
 
 const themeEntries = require('./MapStore2/build/themes.js').themeEntries;
 const extractThemesPlugin = require('./MapStore2/build/themes.js').extractThemesPlugin;
@@ -19,7 +21,7 @@ module.exports = require('./MapStore2/build/buildConfig')({
         framework: path.join(__dirname, "MapStore2", "web", "client"),
         code: [path.join(__dirname, "js"), path.join(__dirname, "MapStore2", "web", "client")]
     },
-    plugins: [extractThemesPlugin, ModuleFederationPlugin],
+    plugins: [extractThemesPlugin, ModuleFederationPlugin, new DotEnv()],
     prod: false,
     publicPath: undefined,
     cssPrefix: '.map-v1',
